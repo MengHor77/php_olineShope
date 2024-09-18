@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS */
+.bg-primary {
+  background-color: theme('colors.primary'); /* Using the main custom primary color */
+}
+
+.bg-primary-30 {
+  background-color: theme('colors.primary-30'); /* Using the 30% custom shade */
+}
+
+.bg-primary-50 {
+  background-color: theme('colors.primary-50'); /* Using the 50% custom shade */
+}
+
+.bg-primary-70 {
+  background-color: theme('colors.primary-70'); /* Using the 70% custom shade */
+}
+
+.bg-primary-90 {
+  background-color: theme('colors.primary-90'); /* Using the 90% custom shade */
+}
+
+.bg-primary-100 {
+  background-color: theme('colors.primary-100'); /* Using the darkest custom shade */
+}
+.bg-custom-pink {
+  background-color: rgb(240, 18, 102);
+}
+.skew-x-20 {
+  -ms-transform: skewX(-20deg); /* IE 9 */
+  -webkit-transform: skewX(-20deg); /* Safari */
+  transform: skewX(-20deg); /* Standard syntax */
+}
+.bg-custom-gray {
+  background-color: rgb(75, 74, 73); /* Your custom color */
+}
+.bg-custom-gray-90 {
+  background-color: rgb(114, 111, 109); /* Your custom color */
+}
+.pl-15 {
+  padding-left: 3.75rem;
+}
+
+.pr-15 {
+  padding-right: 3.75rem;
+}
