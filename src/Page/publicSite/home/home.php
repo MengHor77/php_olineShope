@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,21 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-    <link href="../../../dist/styles.css" rel="stylesheet">
-
+    <!-- <link href="../../../dist/styles.css" rel="stylesheet"> -->
+    <link href="/php/src/dist/styles.css" rel="stylesheet">
 </head>
 
 <body>
     <div>
-        <?php include '../Layout/Header/headerPubliceSite.php';?>
+    <?php include 'C:/xampp/htdocs/php/src/Page/publicSite/Layout/Header/headerPubliceSite.php'; ?>
+
     </div>
 
     <div class=" w-full h-full flex flex-row items-center justify-between px-10 ">
 
         <div>
-            <?php
-                include 'C:\xampp\htdocs\php\src\Page\publicSite\home\slide.php';
-                ?>
+        <?php include 'slide.php'; ?>
+
+
         </div>
 
         <div class="  flex flex-col gap-2 p-4 justify-between items-center mb-24">
