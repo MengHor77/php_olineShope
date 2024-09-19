@@ -7,8 +7,12 @@
     <link href="../../../../dist/styles.css" rel="stylesheet">
 </head>
 <body>
-    <div>
-         <?php include '../Layout/Header/headerPubliceSite.php';?>
+<div>
+        <!-- Include the header -->
+        <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
+
+        <!-- Include the food index.php -->
+        <?php include __DIR__ . '/index.php'; ?>
     </div>
     
 </body>
