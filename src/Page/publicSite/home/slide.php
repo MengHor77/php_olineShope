@@ -37,22 +37,22 @@ $picture = [
 
 <body class="bg-gray-100">
 
-   <div class="w-full max-w-2xl mx-auto">
+   <div class="w-full max-w-3xl  mx-auto">
     <div class="relative overflow-hidden">
         <!-- Slider images -->
-        <div class="flex transition-transform ease-in-out duration-500 bg-primary-30" id="slider">
+        <div class="flex transition-transform ease-in-out duration-700 bg-primary-30 " id="slider">
             <!-- Dynamically add images from PHP array -->
             <?php foreach ($picture as $index => $img): ?>
-                <img src="<?php echo $img; ?>" class="w-full h-96 object-fill" alt="Slider Image">
+                <img src="<?php echo $img; ?>" class="w-full h-[500px] object-fit" alt="Slider Image">
             <?php endforeach; ?>
         </div>
 
         <!-- Prev/Next buttons -->
         <button
-            class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white px-4 py-2 rounded-full"
+            class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-primary-100 text-white px-4 py-2 rounded-full"
             onclick="prevSlide()">&#10094;</button>
         <button
-            class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white px-4 py-2 rounded-full"
+            class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-primary-100 text-white px-4 py-2 rounded-full"
             onclick="nextSlide()">&#10095;</button>
     </div>
 
