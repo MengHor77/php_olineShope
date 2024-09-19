@@ -47,3 +47,6 @@
 .pr-15 {
   padding-right: 3.75rem;
 }
+.text-primary {
+  color: rgb(156, 197, 75); /* Directly use custom text color */
+}
