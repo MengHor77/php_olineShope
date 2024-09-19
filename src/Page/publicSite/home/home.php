@@ -7,8 +7,6 @@
     <title>home</title>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="../../../dist/styles.css" rel="stylesheet">
-    <!-- <link href="../../../../dist/styles.css" rel="stylesheet"> -->
-
 
 </head>
 
@@ -17,17 +15,17 @@
         <?php include '../Layout/Header/headerPubliceSite.php';?>
     </div>
 
-    <div class=" w-full h-full flex flex-row items-center justify-between px-10 py-10 ">
+    <div class=" w-full h-full flex flex-row items-center justify-between px-10 ">
 
-        <div >
+        <div>
             <?php
                 include 'C:\xampp\htdocs\php\src\Page\publicSite\home\slide.php';
                 ?>
         </div>
 
-        <div class="  flex flex-col gap-2 p-4 justify-between items-center">
+        <div class="  flex flex-col gap-2 p-4 justify-between items-center mb-24">
             <div>
-                <h1 class="font-bold text-2xl" >
+                <h1 class="font-bold text-2xl">
                     Product Of The Week
                 </h1>
             </div>
@@ -49,7 +47,7 @@
                             <p class=" text-custom-pink font-bold text-3xl"> $6.00</p>
                         </div>
                     </div>
-                    <p class="text-gray-500" >
+                    <p class="text-gray-500">
                         Best Before on 23.09.2024
                     </p>
                 </div>
