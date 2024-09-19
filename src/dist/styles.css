@@ -1045,11 +1045,6 @@ video {
   letter-spacing: 0.1em;
 }
 
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
 .text-custom-pink {
   --tw-text-opacity: 1;
   color: rgb(240 18 102 / var(--tw-text-opacity));
