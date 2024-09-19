@@ -19,13 +19,13 @@
 
     <div class=" w-full h-full flex flex-row items-center justify-between px-10 py-10 ">
 
-        <div class =" w-full h-full ">
+        <div >
             <?php
                 include 'C:\xampp\htdocs\php\src\Page\publicSite\home\slide.php';
                 ?>
         </div>
 
-        <div class="  flex flex-col gap-2 p-4 justify-center items-center">
+        <div class="  flex flex-col gap-2 p-4 justify-between items-center">
             <div>
                 <h1 class="font-bold text-2xl" >
                     Product Of The Week
@@ -36,7 +36,7 @@
                     alt="coeurLion">
 
             </div>
-            <div class=" flex flex-col items-center justify-center h-full w-full ">
+            <div class=" flex flex-col items-center justify-between h-full w-full ">
                 <div class=" flex flex-col items-center justify-center gap-2">
                     <p class="font-bold text-2xl">
                         Coulommiers Portion - Cœur De Lion
