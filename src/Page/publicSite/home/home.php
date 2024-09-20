@@ -11,18 +11,15 @@
 </head>
 
 <home>
+
     <header>
         <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
     </header>
 
     <main class=" w-full h-full flex flex-row items-center justify-between px-10 ">
-
         <div>
             <?php include 'slide.php'; ?>
-
-
         </div>
-
         <div class="  flex flex-col gap-2 p-4 justify-between items-center mb-24">
             <div>
                 <h1 class="font-bold text-2xl">
@@ -32,7 +29,6 @@
             <div>
                 <img class=" w-full  h-full " src="http://localhost/php/src/Page/Picture/home/coeurLion.png"
                     alt="coeurLion">
-
             </div>
             <div class=" flex flex-col items-center justify-between h-full w-full ">
                 <div class=" flex flex-col items-center justify-center gap-2">
@@ -55,15 +51,14 @@
                     ​>
                     <span class="iconify" data-icon="hugeicons:shopping-basket-02" data-inline="false"></span>
                     <p> Buy</p>
-
                 </div>
             </div>
         </div>
     </main>
+
     <footer>
         <?php include __DIR__ . '/../Layout/Footer/footer.php'; ?>
     </footer>
-
 
 </home>
 
