@@ -7,14 +7,25 @@
     <!-- <link href="../../../../dist/styles.css" rel="stylesheet"> -->
     <link href="/php/src/dist/styles.css" rel="stylesheet">
 </head>
-<body>
-<div>
-        <!-- Include the header -->
-        <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
 
-        <!-- Include the food index.php -->
-        <?php include __DIR__ . '/index.php'; ?>
+<body>
+
+    <div>
+
+        <header>
+            <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
+        </header>
+
+        <main>
+            <?php include __DIR__ . '/index.php'; ?>
+        </main>
+
+        <footer>
+            <?php include __DIR__ . '/../Layout/Footer/footer.php'; ?>
+        </footer>
+
     </div>
-    
+
 </body>
+
 </html>
