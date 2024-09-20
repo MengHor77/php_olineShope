@@ -12,13 +12,22 @@
 
 <body>
 
-      <div>
-        <!-- Include the header -->
-        <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
+    <div>
 
-        <!-- Include the food index.php -->
-        <?php include __DIR__ . '/index.php'; ?>
+        <header>
+            <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
+        </header>
+
+        <main>
+            <?php include __DIR__ . '/index.php'; ?>
+        </main>
+
+        <footer>
+            <?php include __DIR__ . '/../Layout/Footer/footer.php'; ?>
+        </footer>
+
     </div>
+
 </body>
 
 </html>
