@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,16 +10,15 @@
     <link href="/php/src/dist/styles.css" rel="stylesheet">
 </head>
 
-<body>
-    <div>
-    <?php include 'C:/xampp/htdocs/php/src/Page/publicSite/Layout/Header/headerPubliceSite.php'; ?>
+<home>
+    <header>
+        <?php include __DIR__ . '/../Layout/Header/headerPubliceSite.php'; ?>
+    </header>
 
-    </div>
-
-    <div class=" w-full h-full flex flex-row items-center justify-between px-10 ">
+    <main class=" w-full h-full flex flex-row items-center justify-between px-10 ">
 
         <div>
-        <?php include 'slide.php'; ?>
+            <?php include 'slide.php'; ?>
 
 
         </div>
@@ -62,9 +59,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+    <footer>
+        <?php include __DIR__ . '/../Layout/Footer/footer.php'; ?>
+    </footer>
 
 
-</body>
+</home>
 
 </html>
