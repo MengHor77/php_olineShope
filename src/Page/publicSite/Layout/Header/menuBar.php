@@ -14,7 +14,7 @@
     <div class="w-full h-[50px] bg-primary  flex flex-row px-10">
 
         <div class=" w-full   h-full flex flex-row  item-center">
-            <div class="w-30  h-full  flex flex-row px-4 py-1 hover:bg-primary-100 " id ="clickExpress">
+            <div class="w-30  h-full  flex flex-row px-4 py-1 hover:bg-primary-100 " id="clickExpress">
 
                 <div class=" flex flex-col bg-custom-pink font-bold rounded-l-sm    ">
                     <p class=" ">
@@ -27,26 +27,28 @@
 
             <div class="w-[60px] h-full flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickNew">
-                <h1 class="text-white text-center font-bold text-md tracking-widest">NEW</h1>
+                <a href="/php/src/new" class="text-white text-center font-bold text-md tracking-widest">NEW</a>
             </div>
             <div class="w-[60px] h-full px-10 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickFood">
 
-                <h1 class="text-white text-center font-bold text-md tracking-widest">FOOD</h1>
+                <a href="/php/src/food" class="text-white text-center font-bold text-md tracking-widest">FOOD</a>
             </div>
             <div class="w-[60px] h-full px-10 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickDrink">
 
-                <h1 class="text-white text-center font-bold text-md tracking-widest">DRINK</h1>
+                <a href="/php/src/drink" class="text-white text-center font-bold text-md tracking-widest">DRINK</a>
             </div>
             <div class="w-[200px] h-full px-1 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickHealthAndBeauty">
-                <h1 class="text-white text-center font-bold text-md tracking-widest">HEALTH & BEAUTY</h1>
+                <a href="/php/src/health-beauty" class="text-white text-center font-bold text-md tracking-widest">HEALTH
+                    & BEAUTY</a>
             </div>
 
             <div class="w-[190px] h-full px-1 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickHomeAndLifeStyle">
-                <h1 class="text-white text-center font-bold text-md tracking-widest ">HOME & LIFESTYLE</h1>
+                <a href="/php/src/home-life-style" class="text-white text-center font-bold text-md tracking-widest">HOME
+                    & LIFESTYLE</a>
             </div>
         </div>
         <!-- brands  -->
@@ -85,126 +87,30 @@
     </div>
     <!-- show express  page  -->
     <div class=" hidden " id="expressContent">
-            <?php include 'C:/xampp/htdocs/php/src/Page/publicSite/homeAndLifeStyle/index.php'; ?>
+        <?php include 'C:/xampp/htdocs/php/src/Page/publicSite/homeAndLifeStyle/index.php'; ?>
     </div>
 
-    <!-- for new page srcript -->
+    <!-- srcript for display new page-->
     <script>
-            // Get elements
-            const clickNew = document.getElementById('clickNew');
-            const newContent = document.getElementById('newContent');
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', event => {
+            event.preventDefault(); // Prevent default link behavior
 
-            // Toggle visibility of newContent on click
-            clickNew.addEventListener('click', function() {
-                newContent.classList.toggle('hidden');
-            });
+            const url = item.querySelector('a').getAttribute(
+            'href'); // Get the href of the clicked item
+            history.pushState(null, '', url); // Update the URL in the address bar without reloading
 
-            // Hide newContent when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!clickNew.contains(event.target) && !newContent.contains(event.target)) {
-                    newContent.classList.add('hidden');
-                }
-            });
-    </script>
-
-    <!-- for food content -->
-    <script>
-            // Get elements
-            const clickFood = document.getElementById('clickFood');
-            const foodContent = document.getElementById('foodContent');
-
-            // Toggle visibility of newContent on click
-            clickFood.addEventListener('click', function() {
-                foodContent.classList.toggle('hidden');
-            });
-
-            // Hide newContent when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!clickFood.contains(event.target) && !foodContent.contains(event.target)) {
-                    foodContent.classList.add('hidden');
-                }
-            });
-    </script>
-
-
-    <!-- for drink content -->
-    <script>
-            // Get elements
-            const clickDrink = document.getElementById('clickDrink');
-            const drinkContent = document.getElementById('drinkContent');
-
-            // Toggle visibility of newContent on click
-            clickDrink.addEventListener('click', function() {
-                drinkContent.classList.toggle('hidden');
-            });
-
-            // Hide newContent when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!clickDrink.contains(event.target) && !drinkContent.contains(event.target)) {
-                    drinkContent.classList.add('hidden');
-                }
-            });
-    </script>
-
-
-    <!-- for health and beauty content -->
-    <script>
-            // Get elements
-            const clickHealthAndBeauty = document.getElementById('clickHealthAndBeauty');
-            const healthAndBeautyContent = document.getElementById('healthAndBeautyContent');
-
-            // Toggle visibility of newContent on click
-            clickHealthAndBeauty.addEventListener('click', function() {
-                healthAndBeautyContent.classList.toggle('hidden');
-            });
-
-            // Hide newContent when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!clickHealthAndBeauty.contains(event.target) && !healthAndBeautyContent.contains(event.target)) {
-                    healthAndBeautyContent.classList.add('hidden');
-                }
-            });
-    </script>
-
-
-    <!-- for home and life style content -->
-    <script>
-                // Get elements
-                const clickHomeAndLifeStyle = document.getElementById('clickHomeAndLifeStyle');
-                const homeAndLifeStyleContent = document.getElementById('homeAndLifeStyleContent');
-
-                // Toggle visibility of newContent on click
-                clickHomeAndLifeStyle.addEventListener('click', function() {
-                    homeAndLifeStyleContent.classList.toggle('hidden');
-                });
-
-                // Hide newContent when clicking outside
-                document.addEventListener('click', function(event) {
-                    if (!clickHomeAndLifeStyle.contains(event.target) && !homeAndLifeStyleContent.contains(event.target)) {
-                        homeAndLifeStyleContent.classList.add('hidden');
-                    }
-                });
-    </script>
-
-       <!-- for express content -->
-       <script>
-    // Get elements
-    const clickExpress = document.getElementById('clickExpress');
-    const expressContent = document.getElementById('expressContent');
-
-    // Toggle visibility of newContent on click
-    clickExpress.addEventListener('click', function() {
-        expressContent.classList.toggle('hidden');
-    });
-
-    // Hide newContent when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!clickExpress.contains(event.target) && !expressContent.contains(event.target)) {
-            expressContent.classList.add('hidden');
-        }
+            // Make an AJAX request to fetch the new content
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    // Replace the current content with the new content
+                    document.getElementById('content').innerHTML = html;
+                })
+                .catch(err => console.error(err));
+        });
     });
     </script>
-
 </body>
 
 </html>
