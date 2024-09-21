@@ -8,71 +8,74 @@ class AuthController {
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
+            $username = trim($_POST['username']);
             $password = $_POST['password'];
-    
+
             // Validate credentials
             $query = "SELECT * FROM users WHERE username = ?";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("s", $username);
             $stmt->execute();
             $result = $stmt->get_result();
-    
+
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc(); // Fetch user data
                 if (password_verify($password, $user['password'])) { // Verify the hashed password
                     session_start();
-                    $_SESSION['user'] = ['username' => $username]; // Store the username in an array
+                    $_SESSION['user'] = ['username' => $username]; // Store user info
                     header('Location: /php/src/dashboard');
                     exit;
                 } else {
                     $error = "Invalid username or password.";
-                    include __DIR__ . '/../views/login.php';
                 }
             } else {
                 $error = "Invalid username or password.";
-                include __DIR__ . '/../views/login.php';
             }
+            include __DIR__ . '/../views/login.php'; // Show the login form with error
             $stmt->close();
         } else {
-            include __DIR__ . '/../views/login.php';
+            include __DIR__ . '/../views/login.php'; // Show login form
         }
     }
+
     public function logout() {
         session_start();
         session_destroy();
         header('Location: /php/src/login');
         exit;
     }
+
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
+            $username = trim($_POST['username']);
             $password = $_POST['password'];
             $confirmPassword = $_POST['confirm_password'];
-    
+
             // Validate inputs
             if (empty($username) || empty($password) || empty($confirmPassword)) {
                 $error = "All fields are required.";
                 include __DIR__ . '/../views/register.php';
                 return;
             }
-    
+
             // Check if the passwords match
             if ($password !== $confirmPassword) {
                 $error = "Passwords do not match.";
                 include __DIR__ . '/../views/register.php';
                 return;
             }
+
             // Check if the username already exists
             $stmt = $this->db->prepare("SELECT * FROM users WHERE username = ?");
             $stmt->bind_param("s", $username);
             $stmt->execute();
-            $stmt->store_result();  
+            $stmt->store_result();
             if ($stmt->num_rows > 0) {
                 $error = "Username already exists.";
                 include __DIR__ . '/../views/register.php';
                 return;
             }
+
             // Hash the password before storing it
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $this->db->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
@@ -82,12 +85,11 @@ class AuthController {
                 exit;
             } else {
                 $error = "Error: " . $this->db->error;
-                include __DIR__ . '/../views/register.php';
             }
+            include __DIR__ . '/../views/register.php'; // Show register form with error
             $stmt->close();
         } else {
             include __DIR__ . '/../views/register.php'; // Show registration form
         }
     }
-    
 }
