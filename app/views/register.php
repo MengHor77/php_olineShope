@@ -9,36 +9,38 @@
 </head>
 
 <body>
-    <div class="register-container w-full flex flex-col  justify-center items-center mt-10  ">
+    <div class="flex justify-center items-center min-h-screen ">
+        <div class="login-container  flex flex-col  justify-center items-center mt-10 bg-gray-200 ">
 
-        <form method="POST" action="/php/src/register" class="bg-gray-300 p-10 w-96 ">
-            <h2>Register</h2>
-            <?php if (isset($error)): ?>
-            <p class="error"><?php echo $error; ?></p>
-            <?php endif; ?>
-            <div class=" flex flex-col gap-1    pt-4 ">
-                <label for=""> user name</label>
-                <input type="text" name="username" placeholder="Username" required>
+            <form method="POST" action="/php/src/register" class="p-10 w-96 ">
+                <h2 class ="font-bold text-primary text-center text-2xl">Register form</h2>
+                <?php if (isset($error)): ?>
+                <p class="error"><?php echo $error; ?></p>
+                <?php endif; ?>
+                <div class=" flex flex-col gap-1    pt-4 ">
+                    <label for=""> user name</label>
+                    <input type="text" name="username" placeholder="Username" required>
 
-            </div>
-            <div class=" flex flex-col gap-1   pt-4 ">
-                <label for=" ">password</label>
-                <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class=" flex flex-col gap-1   pt-4 ">
+                    <label for=" ">password</label>
+                    <input type="password" name="password" placeholder="Password" required>
 
-            </div>
-            <div class="flex flex-col gap-1 pt-4">
-                <label for="">Confirm password</label>
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            </div>
+                </div>
+                <div class="flex flex-col gap-1 pt-4">
+                    <label for="">Confirm password</label>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                </div>
 
-            <div class=" mt-10">
-                <button type="submit" class=" w-32 h-10 bg-primary-100 rounded-md ">Register</button>
+                <div class=" mt-10">
+                    <button type="submit" class=" w-32 h-10 bg-primary-100 rounded-md ">Register</button>
 
-            </div>
-        </form>
-        <p class="  font-bold">Already have an account?
-            <a href="/php/src/login" class=" no-underline hover:underline  hover:text-primary">Login here</a>.
-        </p>
+                </div>
+            </form>
+            <p class="  font-bold">Already have an account?
+                <a href="/php/src/login" class=" no-underline hover:underline  hover:text-primary">Login here</a>.
+            </p>
+        </div>
     </div>
 </body>
 
