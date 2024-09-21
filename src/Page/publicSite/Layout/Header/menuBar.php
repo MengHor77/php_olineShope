@@ -18,11 +18,21 @@
 
                 <div class=" flex flex-col bg-custom-pink font-bold rounded-l-sm    ">
                     <p class=" ">
-                        GO
+                        <a href="/php/src/home-life-style">
+                            GO
+                        </a>
                     </p>
-                    <p class="">TO</p>
+                    <p class="">
+                        <a href="/php/src/home-life-style">
+                            TO
+                        </a>
+                    </p>
+
                 </div>
-                <img class="w-20 h-full" src="http://localhost/php/src/Page/Picture/menuebar/menuebar.png" alt="">
+                <a href="/php/src/home-life-style">
+                    <img class="w-20 h-full" src="http://localhost/php/src/Page/Picture/menuebar/menuebar.png" alt="">
+                </a>
+
             </div>
 
             <div class="w-[60px] h-full flex justify-center items-center hover:bg-primary-100 cursor-pointer"
@@ -97,7 +107,7 @@
             event.preventDefault(); // Prevent default link behavior
 
             const url = item.querySelector('a').getAttribute(
-            'href'); // Get the href of the clicked item
+                'href'); // Get the href of the clicked item
             history.pushState(null, '', url); // Update the URL in the address bar without reloading
 
             // Make an AJAX request to fetch the new content
