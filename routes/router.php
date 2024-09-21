@@ -97,17 +97,6 @@ switch ($url) {
         include __DIR__ . '/../app/views/dashboard.php';
         break;
 
-    case '/php/src/admin':
-        // Redirect to login if not logged in
-        if (!isset($_SESSION['user'])) {
-            header('Location: /php/src/login');
-            exit;
-        }
-        // User is logged in; proceed to admin
-        $controller = new ProductController();
-        $controller->index();
-        break;
-
     default:
         echo "404 Not Found";
         break;
