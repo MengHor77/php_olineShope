@@ -211,7 +211,7 @@ if (isset($_GET['fetch_id'])) {
         <div class="modal-content">
             <button class="close-modal absolute top-2 right-2 text-gray-600 text-2xl">&times;</button>
             <h2 class="text-xl font-semibold mb-4">Add Product</h2>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="input.php" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
                     <label for="text_name" class="block text-gray-700">Product Name</label>
                     <input type="text" name="text_name" id="text_name" class="w-full border border-gray-300 p-2 rounded" required>
