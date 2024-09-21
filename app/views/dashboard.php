@@ -1,16 +1,13 @@
-
-
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
 
 if (!isset($_SESSION['user'])) {
     header('Location: /php/src/login');
     exit;
 }
 
-include __DIR__ . '/../../src/Page/Admin/input.php';
+$controller = new ProductController();
+$controller->index();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +17,11 @@ include __DIR__ . '/../../src/Page/Admin/input.php';
     <title>Dashboard</title>
 </head>
 <body>
+    <div>
     <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h1>
     <a href="/php/src/logout">Logout</a>
+    
+    </div>
+   
 </body>
 </html>
