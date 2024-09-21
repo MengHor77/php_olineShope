@@ -211,7 +211,7 @@ if (isset($_GET['fetch_id'])) {
         <div class="modal-content">
             <button class="close-modal absolute top-2 right-2 text-gray-600 text-2xl">&times;</button>
             <h2 class="text-xl font-semibold mb-4">Add Product</h2>
-            <form action="input.php" method="post" enctype="multipart/form-data">
+            <form action="/php/src/admin" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
                     <label for="text_name" class="block text-gray-700">Product Name</label>
                     <input type="text" name="text_name" id="text_name" class="w-full border border-gray-300 p-2 rounded" required>
@@ -261,7 +261,7 @@ if (isset($_GET['fetch_id'])) {
                     <td class='border-b px-4 py-2 text-center'>{$row['productName']}</td>
                     <td class='border-b px-4 py-2 text-center'>{$row['productPrice']}</td>
                     <td class='border-b px-4 py-2 text-center'>{$row['productQty']}</td>
-                    <td class='border-b px-4 py-2 text-center'><img src='uploads/{$row['productImage']}' alt='{$row['productName']}' class='w-20 h-20 object-fit mx-auto'></td>
+                    <td class='border-b px-4 py-2 text-center'><img src='/php/src/Page/Admin/uploads/{$row['productImage']}' alt='{$row['productName']}' class='w-20 h-20 object-fit mx-auto'></td>
                     <td class='border-b px-4 py-2 text-center'>
                      <div class='flex justify-center space-x-4'>
                             <button class='edit-btn bg-blue-500 text-white px-4 py-2 rounded-lg' data-id='{$row['productID']}'>Edit</button>
@@ -285,7 +285,7 @@ if (isset($_GET['fetch_id'])) {
             <h2 class="text-xl font-semibold">Edit Product</h2>
             <span class="close-modal text-gray-600 cursor-pointer text-2xl">&times;</span>
         </div>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="php/src/admin" method="post" enctype="multipart/form-data">
             <input type="hidden" name="edit_id" id="edit_id">
             <div class="mb-4">
                 <label for="edit_name" class="block text-gray-700">Product Name</label>
