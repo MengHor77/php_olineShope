@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once __DIR__ . '/../app/controllers/HomeController.php';
 require_once __DIR__ . '/../app/controllers/NewController.php';
@@ -7,8 +8,9 @@ require_once __DIR__ . '/../app/controllers/FoodController.php';
 require_once __DIR__ . '/../app/controllers/HealthBeautyController.php';
 require_once __DIR__ . '/../app/controllers/HomeLifestyleController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php'; 
+require_once __DIR__ . '/../app/controllers/ProductController.php';
 
-session_start(); // Start session at the top
+
 
 $url = $_SERVER['REQUEST_URI'];
 $url = explode('?', $url)[0]; // Remove query string if any
@@ -86,11 +88,25 @@ switch ($url) {
         break;
 
     case '/php/src/dashboard':
+        // Redirect to login if not logged in
         if (!isset($_SESSION['user'])) {
             header('Location: /php/src/login');
             exit;
         }
-        include __DIR__ . '/../app/views/dashboard.php'; 
+        // Include the dashboard if the user is logged in
+        include __DIR__ . '/../app/views/dashboard.php';
+        break;
+
+    case '/php/src/admin':
+        // Redirect to login if not logged in
+        if (!isset($_SESSION['user'])) {
+            header('Location: /php/src/login');
+            exit;
+        }
+        // User is logged in; proceed to admin
+        $controller = new ProductController();
+        $controller->index();
+        break;
 
     default:
         echo "404 Not Found";
