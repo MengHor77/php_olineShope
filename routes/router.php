@@ -1,28 +1,48 @@
 <?php
+
 require_once __DIR__ . '/../app/controllers/HomeController.php';
+require_once __DIR__ . '/../app/controllers/NewController.php';
+require_once __DIR__ . '/../app/controllers/DrinkController.php';
+require_once __DIR__ . '/../app/controllers/FoodController.php';
+require_once __DIR__ . '/../app/controllers/HealthBeautyController.php';
+require_once __DIR__ . '/../app/controllers/HomeLifestyleController.php';
+
 
 $url = $_SERVER['REQUEST_URI'];
+$url = explode('?', $url)[0]; // Remove query string if any
 
-// Define the mapping of URLs to controller methods
-$routes = [
-    '/php/src/' => 'home', 
-    '/php/src/food' => 'food',
-    '/php/src/drink' => 'drink',
-    '/php/src/health-beauty' => 'healthBeauty',
-    '/php/src/home-life-style' => 'homeLifestyle',
-    '/php/src/new' => 'new',
-];
+switch ($url) {
+    case '/php/src/':
+        $controller = new HomeController();
+        $controller->showHome();
+        break;
 
-$url = explode('?', $url)[0];
+    case '/php/src/food':
+        $controller = new FoodController();
+        $controller->showFood();
+        break;
 
-// Create an instance of the HomeController
-$controller = new HomeController();
+    case '/php/src/drink':
+        $controller = new DrinkController();
+        $controller->showDrink();
+        break;
 
-// Call the appropriate method based on the URL
-if (array_key_exists($url, $routes)) {
-    $method = 'show' . ucfirst($routes[$url]);
-    $controller->$method();
-} else {
-    
-    echo "404 Not Found";
+    case '/php/src/health-beauty':
+        $controller = new HealthBeautyController();
+        $controller->showHealthBeauty();
+        break;
+
+    case '/php/src/home-life-style':
+        $controller = new HomeLifestyleController();
+        $controller->showHomeLifestyle();
+        break;
+
+    case '/php/src/new':
+        $controller = new NewController();
+        $controller->showNew();
+        break;
+
+    default:
+        echo "404 Not Found";
+        break;
 }
