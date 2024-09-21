@@ -50,3 +50,11 @@
 .text-primary {
   color: rgb(156, 197, 75); /* Directly use custom text color */
 }
+/* Add this to your CSS file */
+a {
+  text-decoration: none; /* Remove underline by default */
+}
+
+a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
