@@ -1,4 +1,3 @@
-
 <?php
 class AuthController {
     private $db;
@@ -39,38 +38,41 @@ class AuthController {
             include __DIR__ . '/../views/login.php';
         }
     }
-    
-
     public function logout() {
         session_start();
         session_destroy();
         header('Location: /php/src/login');
         exit;
     }
-
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
-
-            if (empty($username) || empty($password)) {
-                $error = "Username and password cannot be empty.";
+            $confirmPassword = $_POST['confirm_password'];
+    
+            // Validate inputs
+            if (empty($username) || empty($password) || empty($confirmPassword)) {
+                $error = "All fields are required.";
                 include __DIR__ . '/../views/register.php';
                 return;
             }
-
+    
+            // Check if the passwords match
+            if ($password !== $confirmPassword) {
+                $error = "Passwords do not match.";
+                include __DIR__ . '/../views/register.php';
+                return;
+            }
             // Check if the username already exists
             $stmt = $this->db->prepare("SELECT * FROM users WHERE username = ?");
             $stmt->bind_param("s", $username);
             $stmt->execute();
-            $stmt->store_result();
-
+            $stmt->store_result();  
             if ($stmt->num_rows > 0) {
                 $error = "Username already exists.";
                 include __DIR__ . '/../views/register.php';
                 return;
             }
-
             // Hash the password before storing it
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $this->db->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
@@ -87,4 +89,5 @@ class AuthController {
             include __DIR__ . '/../views/register.php'; // Show registration form
         }
     }
+    
 }
