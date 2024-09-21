@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-include __DIR__ . '/../../src/Page/Admin/input.php'; // Adjust the path as necessary
+include __DIR__ . '/../../src/Page/Admin/input.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
