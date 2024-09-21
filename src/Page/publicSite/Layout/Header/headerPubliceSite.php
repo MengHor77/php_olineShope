@@ -17,8 +17,10 @@
         <div class="w-full bg-gray-100 flex flex-row gap-10 justify-between items-center px-10 relative">
             <!-- Logo Section -->
             <div class="w-1/5 h-20 flex justify-center items-center py-2">
-                <img class="w-32 h-full "
-                 src="http://localhost/php/src/Page/Picture/logo/logo.png" alt="logo">
+                <a href="/php/src/">
+                    <!-- Add this link -->
+                    <img class="w-32 h-full" src="http://localhost/php/src/Page/Picture/logo/logo.png" alt="logo">
+                </a>
             </div>
 
 
