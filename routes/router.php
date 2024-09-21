@@ -6,7 +6,6 @@ $url = $_SERVER['REQUEST_URI'];
 // Define the mapping of URLs to controller methods
 $routes = [
     '/php/src/' => 'home', 
-    '/php/src/home' => 'home',
     '/php/src/food' => 'food',
     '/php/src/drink' => 'drink',
     '/php/src/health-beauty' => 'healthBeauty',
