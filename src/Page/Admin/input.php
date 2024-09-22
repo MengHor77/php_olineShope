@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['edit_id'])) {
         $allowedExts = array('jpg', 'jpeg', 'png', 'gif');
 
         if (in_array($fileExtension, $allowedExts)) {
-            $uploadFileDir = 'uploads/';
+            $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/uploads/';
             if (!is_dir($uploadFileDir)) {
                 mkdir($uploadFileDir, 0755, true);
             }
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_id'])) {
         $allowedExts = array('jpg', 'jpeg', 'png', 'gif');
 
         if (in_array($fileExtension, $allowedExts)) {
-            $uploadFileDir = 'uploads/';
+            $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/uploads/';
             $destPath = $uploadFileDir . $fileName;
             if (move_uploaded_file($fileTmpPath, $destPath)) {
                 $productImage = $fileName; // Update the image path only if a new image is uploaded
