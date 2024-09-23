@@ -1212,6 +1212,10 @@ a:hover {
   /* Add underline on hover */
 }
 
+.bg-primary-30 {
+  background-color: rgb(193, 219, 155);
+}
+
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }
