@@ -58,3 +58,6 @@ a {
 a:hover {
   text-decoration: underline; /* Add underline on hover */
 }
+.bg-primary-30 {
+  background-color: rgb(193, 219, 155);
+}
