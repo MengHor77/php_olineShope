@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Display product image if available
                         if (data.productImage) {
-                            editPreview.src = `uploads/${data.productImage}`;
+                            editPreview.src = `http://localhost/php/src/Page/Admin/uploads/${data.productImage}`;
                             editPreview.style.display = 'block';
                         } else {
                             editPreview.style.display = 'none';
