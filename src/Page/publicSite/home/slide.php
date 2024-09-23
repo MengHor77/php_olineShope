@@ -16,8 +16,9 @@ $picture = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Slider</title>
+    <link href="http://localhost/php/dist/styles.css" rel="stylesheet"> <!-- Corrected path -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
-    <link href="../../../../dist/styles.css" rel="stylesheet">
+    
     <style>
         .dot {
             height: 12px;
