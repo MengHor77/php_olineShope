@@ -201,7 +201,6 @@ if (isset($_GET['fetch_id'])) {
         <div class="flex flex-col gap-1  items-end">
             <button id="logout" class=" bg-blue-500 rounded-md px-4 py-2 w-20 items-end ">logout</button>
             <!-- Welcome message -->
-            <h1 class="mt-2">Welcome, <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h1>
         </div>
     </div>
     <!-- comfirm delete product -->
@@ -292,7 +291,7 @@ if (isset($_GET['fetch_id'])) {
         ?>
         </tbody>
     </table>
-    
+
     <!-- Edit Modal   -->
     <div id="editProductModal" class="modal">
         <div class="modal-content">
@@ -328,16 +327,13 @@ if (isset($_GET['fetch_id'])) {
             </form>
         </div>
     </div>
-    <!--for edite delete  -->
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-        const addProductBtn = document.getElementById('addProductBtn');
         const addProductModal = document.getElementById('addProductModal');
         const editProductModal = document.getElementById('editProductModal');
+        const confirmationModal = document.getElementById('confirmationModal');
         const closeModalButtons = document.querySelectorAll('.close-modal');
-
-        // Image inputs and previews
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('text_image');
         const preview = document.getElementById('preview');
@@ -346,58 +342,114 @@ if (isset($_GET['fetch_id'])) {
         const editFileInput = document.getElementById('edit_image');
         const editPreview = document.getElementById('edit-preview');
 
-        // Open Add Product Modal
-        addProductBtn.addEventListener('click', () => {
-            addProductModal.style.display = 'block';
-        });
-
-        // Close any modal
-        closeModalButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                addProductModal.style.display = 'none';
-                editProductModal.style.display = 'none';
+        // Function to handle Add Product functionality
+        function addProduct() {
+            document.getElementById('addProductBtn').addEventListener('click', () => {
+                addProductModal.style.display = 'block';
             });
-        });
+        }
 
-        // Handle edit button clicks
-        document.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const productId = e.target.getAttribute('data-id');
-                fetch(`?fetch_id=${productId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                        } else {
-                            // Populate edit modal with product data
-                            document.getElementById('edit_id').value = data.productID;
-                            document.getElementById('edit_name').value = data.productName;
-                            document.getElementById('edit_price').value = data.productPrice;
-                            document.getElementById('edit_qty').value = data.productQty;
-
-                            // Display product image if available
-                            if (data.productImage) {
-                                editPreview.src =
-                                    `http://localhost/php/src/Page/Admin/uploads/${data.productImage}`;
-                                editPreview.style.display = 'block';
+        // Function to handle Edit Product functionality
+        function editProduct() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = e.target.getAttribute('data-id');
+                    fetch(`?fetch_id=${productId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                alert(data.error);
                             } else {
-                                editPreview.style.display = 'none';
+                                // Populate edit modal with product data
+                                document.getElementById('edit_id').value = data.productID;
+                                document.getElementById('edit_name').value = data.productName;
+                                document.getElementById('edit_price').value = data.productPrice;
+                                document.getElementById('edit_qty').value = data.productQty;
+
+                                // Display product image if available
+                                if (data.productImage) {
+                                    editPreview.src = `http://localhost/php/src/Page/Admin/uploads/${data.productImage}`;
+                                    editPreview.style.display = 'block';
+                                } else {
+                                    editPreview.style.display = 'none';
+                                }
+
+                                // Show the edit modal
+                                editProductModal.style.display = 'block';
                             }
-
-                            // Show the edit modal
-                            editProductModal.style.display = 'block';
-                        }
-                    });
+                        });
+                });
             });
-        });
+        }
 
-        // Handle file input and preview functionality for Add Product
-        handleFileInput(dropZone, fileInput, preview);
+        // Function to handle Delete Product functionality
+        function deleteProduct() {
+            const confirmDeleteButton = document.getElementById('confirmDelete');
+            const cancelDeleteButton = document.getElementById('cancelDelete');
+            let deleteUrl = '';
 
-        // Handle file input and preview functionality for Edit Product
-        handleFileInput(editDropZone, editFileInput, editPreview);
+            // Show the modal and set the delete URL
+            function showDeleteModal(url) {
+                deleteUrl = url;
+                confirmationModal.classList.remove('hidden');
+            }
 
-        // Reusable function for handling drag-and-drop and file input preview
+            // Confirm deletion
+            confirmDeleteButton.addEventListener('click', () => {
+                window.location.href = deleteUrl; // Redirect to delete URL
+            });
+
+            // Cancel deletion
+            cancelDeleteButton.addEventListener('click', () => {
+                confirmationModal.classList.add('hidden');
+            });
+
+            // Attach click events to delete buttons
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showDeleteModal(e.target.getAttribute('data-url'));
+                });
+            });
+        }
+
+        // Function to handle Search Product functionality
+        function searchProduct() {
+            const searchByIdInput = document.getElementById('searchById');
+            const searchByNameInput = document.getElementById('searchByName');
+            const searchButton = document.getElementById('searchButton');
+            const productTableBody = document.getElementById('productTableBody');
+
+            // Function to filter table rows based on search inputs
+            function filterTable() {
+                const idQuery = searchByIdInput.value.trim().toLowerCase();
+                const nameQuery = searchByNameInput.value.trim().toLowerCase();
+                const rows = productTableBody.getElementsByTagName('tr');
+
+                for (let row of rows) {
+                    const idCell = row.cells[0].innerText.toLowerCase();
+                    const nameCell = row.cells[1].innerText.toLowerCase();
+                    const idMatch = idQuery === '' || idCell.includes(idQuery);
+                    const nameMatch = nameQuery === '' || nameCell.includes(nameQuery);
+
+                    row.style.display = (idMatch && nameMatch) ? '' : 'none'; // Show or hide row
+                }
+            }
+
+            // Handle search button click
+            searchButton.addEventListener('click', filterTable);
+
+            // Optional: Allow pressing Enter to trigger search
+            searchByIdInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') filterTable();
+            });
+
+            searchByNameInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') filterTable();
+            });
+        }
+
+        // Function to handle file input and preview functionality
         function handleFileInput(dropZoneElem, fileInputElem, previewElem) {
             // Handle click to open file input
             dropZoneElem.addEventListener('click', () => {
@@ -444,83 +496,45 @@ if (isset($_GET['fetch_id'])) {
                 }
             });
         }
-    });
 
-    // for search   
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchByIdInput = document.getElementById('searchById');
-        const searchByNameInput = document.getElementById('searchByName');
-        const searchButton = document.getElementById('searchButton');
-        const productTableBody = document.getElementById('productTableBody');
-
-        // Function to filter table rows based on search inputs
-        function filterTable() {
-            const idQuery = searchByIdInput.value.trim().toLowerCase();
-            const nameQuery = searchByNameInput.value.trim().toLowerCase();
-
-            const rows = productTableBody.getElementsByTagName('tr');
-
-            for (let row of rows) {
-                const idCell = row.cells[0].innerText.toLowerCase();
-                const nameCell = row.cells[1].innerText.toLowerCase();
-
-                const idMatch = idQuery === '' || idCell.includes(idQuery);
-                const nameMatch = nameQuery === '' || nameCell.includes(nameQuery);
-
-                if (idMatch && nameMatch) {
-                    row.style.display = ''; // Show row
-                } else {
-                    row.style.display = 'none'; // Hide row
-                }
-            }
-        }
-
-        // Handle search button click
-        searchButton.addEventListener('click', filterTable);
-
-        // Optional: Allow pressing Enter to trigger search
-        searchByIdInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') filterTable();
-        });
-
-        searchByNameInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') filterTable();
-        });
-    });
-
-
-    // comfirm delete product
-    document.addEventListener('DOMContentLoaded', () => {
-        const confirmationModal = document.getElementById('confirmationModal');
-        const confirmDeleteButton = document.getElementById('confirmDelete');
-        const cancelDeleteButton = document.getElementById('cancelDelete');
-        let deleteUrl = '';
-
-        // Show the modal and set the delete URL
-        function showDeleteModal(url) {
-            deleteUrl = url;
-            confirmationModal.classList.remove('hidden');
-        }
-
-        // Confirm deletion
-        confirmDeleteButton.addEventListener('click', () => {
-            window.location.href = deleteUrl; // Redirect to delete URL
-        });
-
-        // Cancel deletion
-        cancelDeleteButton.addEventListener('click', () => {
-            confirmationModal.classList.add('hidden');
-        });
-
-        // Attach click events to delete buttons
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                showDeleteModal(e.target.getAttribute('data-url'));
+        // Function to close modals
+        function closeModal() {
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    addProductModal.style.display = 'none'; // Close Add Product Modal
+                    editProductModal.style.display = 'none'; // Close Edit Product Modal
+                    confirmationModal.classList.add('hidden'); // Close Confirmation Modal
+                });
             });
-        });
+
+            // Close modals when clicking outside of the modal
+            window.addEventListener('click', (event) => {
+                if (event.target === addProductModal) {
+                    addProductModal.style.display = 'none';
+                }
+                if (event.target === editProductModal) {
+                    editProductModal.style.display = 'none';
+                }
+                if (event.target === confirmationModal) {
+                    confirmationModal.classList.add('hidden');
+                }
+            });
+        }
+
+        // Call functions to initialize functionalities
+        addProduct();
+        editProduct();
+        deleteProduct();
+        searchProduct();
+        closeModal(); // Initialize close modal functionality
+
+        // Initialize file input handlers
+        handleFileInput(dropZone, fileInput, preview);
+        handleFileInput(editDropZone, editFileInput, editPreview);
     });
-    </script>
+</script>
+
+
 
 </body>
 
