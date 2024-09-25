@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['edit_id'])) {
 
         if (in_array($fileExtension, $allowedExts)) {
             $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/uploads/';
+           
             if (!is_dir($uploadFileDir)) {
                 mkdir($uploadFileDir, 0755, true);
             }
@@ -132,18 +133,36 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// Fetch product details for editing
+// Check if 'fetch_id' parameter is set in the URL
 if (isset($_GET['fetch_id'])) {
+    // Sanitize the fetch ID to ensure it's an integer
     $fetchId = intval($_GET['fetch_id']);
-    $sql = "SELECT * FROM products WHERE productID = $fetchId";
-    $result = $conn->query($sql);
+
+    // Prepare SQL query using prepared statements to prevent SQL injection
+    $sql = "SELECT * FROM products WHERE productID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $fetchId); // "i" denotes integer type
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Set content type to JSON
+    header('Content-Type: application/json');
+
+    // Check if a product was found
     if ($result->num_rows > 0) {
+        // Fetch the product details and return as JSON
         echo json_encode($result->fetch_assoc());
     } else {
+        // Return an error message if no product is found
         echo json_encode(array('error' => 'Product not found'));
     }
+
+  
+    
+    // Exit script to prevent further execution
     exit();
 }
+
 
 ?>
 
@@ -351,36 +370,71 @@ if (isset($_GET['fetch_id'])) {
 
         // Function to handle Edit Product functionality
         function editProduct() {
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const productId = e.target.getAttribute('data-id');
-                    fetch(`?fetch_id=${productId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.error) {
-                                alert(data.error);
-                            } else {
-                                // Populate edit modal with product data
-                                document.getElementById('edit_id').value = data.productID;
-                                document.getElementById('edit_name').value = data.productName;
-                                document.getElementById('edit_price').value = data.productPrice;
-                                document.getElementById('edit_qty').value = data.productQty;
+                const editProductModal = document.getElementById('editProductModal');
+                const editPreview = document.getElementById('edit-preview'); // Correct image preview element
+                const closeModal = editProductModal.querySelector('.close-modal'); // Close button reference for the specific modal
 
-                                // Display product image if available
-                                if (data.productImage) {
-                                    editPreview.src = `http://localhost/php/src/Page/Admin/uploads/${data.productImage}`;
-                                    editPreview.style.display = 'block';
-                                } else {
-                                    editPreview.style.display = 'none';
+                // Add click event to all edit buttons
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = e.target.getAttribute('data-id');
+                        
+                        // Fetch the product data for the specified ID
+                        fetch(`?fetch_id=${productId}`)
+                            .then(response => response.text())  // Fetch as text to inspect the raw content
+                            .then(data => {
+                                console.log('Raw text response:', data);  // Log raw response content
+                                try {
+                                    const jsonData = JSON.parse(data);  // Try parsing the text as JSON
+
+                                    // Check if the response contains an error
+                                    if (jsonData.error) {
+                                        alert(jsonData.error);
+                                    } else {
+                                        // Populate the edit modal fields with the fetched data
+                                        document.getElementById('edit_id').value = jsonData.productID;
+                                        document.getElementById('edit_name').value = jsonData.productName;
+                                        document.getElementById('edit_price').value = jsonData.productPrice;
+                                        document.getElementById('edit_qty').value = jsonData.productQty;
+
+                                        // Handle image preview display
+                                        if (jsonData.productImage) {
+                                            editPreview.src = `http://localhost/php/src/Page/Admin/uploads/${jsonData.productImage}`;
+                                            editPreview.style.display = 'block';
+                                        } else {
+                                            editPreview.style.display = 'none';
+                                        }
+
+                                        // Show the edit modal
+                                        editProductModal.style.display = 'block';
+                                    }
+                                } catch (error) {
+                                    console.error('Error parsing JSON:', error);
+                                    alert('An error occurred while processing the product details.');
                                 }
-
-                                // Show the edit modal
-                                editProductModal.style.display = 'block';
-                            }
-                        });
+                            })
+                            .catch(err => {
+                                console.error('Error fetching product data:', err);
+                                alert('An error occurred while fetching product details.');
+                            });
+                    });
                 });
-            });
-        }
+
+                // Close modal functionality
+                closeModal.addEventListener('click', () => {
+                    editProductModal.style.display = 'none';
+                });
+
+                // Close the modal when clicking outside of it
+                window.addEventListener('click', (event) => {
+                    if (event.target === editProductModal) {
+                        editProductModal.style.display = 'none';
+                    }
+                });
+}
+
+        // Ensure that the function is called when the page loads
+        document.addEventListener('DOMContentLoaded', editProduct);
 
         // Function to handle Delete Product functionality
         function deleteProduct() {
