@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['edit_id'])) {
         $allowedExts = array('jpg', 'jpeg', 'png', 'gif');
 
         if (in_array($fileExtension, $allowedExts)) {
-            $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/uploads/';
+            $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/Layout/Header/uploads/';
             if (!is_dir($uploadFileDir)) {
                 mkdir($uploadFileDir, 0755, true);
             }
@@ -164,6 +164,9 @@ if (isset($_GET['fetch_id'])) {
 
 
 ?>
+<?php
+// Database and PHP logic remains the same
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -173,7 +176,7 @@ if (isset($_GET['fetch_id'])) {
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-    <link href="http://localhost/php/dist/styles.css" rel="stylesheet"> <!-- Corrected path -->
+    <link href="http://localhost/php/dist/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.3/css/all.min.css">
 
     <style>
@@ -188,9 +191,9 @@ if (isset($_GET['fetch_id'])) {
 </head>
 
 <body>
-    <div class="bg-gray-200 w-full flex flex-row ">
+    <div class="bg-gray-200 w-full flex flex-row max-h-screen">
         <!-- Sidebar -->
-        <div id="menu_bar" class="w-[20%] h-full bg-gray-200 flex flex-col gap-2">
+        <div id="menu_bar" class="w-[20%] h-screen bg-gray-200 flex flex-col gap-2">
             <div
                 class="w-full h-10 flex flex-row gap-2 items-center font-bold text-xl px-2 bg-blue-300 hover:bg-blue-500">
                 <span class="iconify w-7 h-7 hover:cursor-pointer" data-icon="ant-design:home-filled"
@@ -219,59 +222,75 @@ if (isset($_GET['fetch_id'])) {
         </div>
 
         <!-- Main Content Area -->
-        <div class="w-full h-full flex flex-col gap-1 bg-gray-300 relative transition-width duration-1000">
+        <div
+            class="w-full h-screen  flex flex-col gap-1 bg-gray-300 relative transition-width duration-1000">
             <!-- Icon Menu -->
             <div class="flex flex-row gap-1">
                 <div class="w-32 h-10">
                     <span id="icon_menu"
-                        class="iconify absolute left-4 top-0 w-7 h-7 bg-blue-500 hover:bg-blue-300 cursor-pointer"
+                        class="iconify absolute left-4 top-2 w-7 h-7 bg-blue-500 hover:bg-blue-300 cursor-pointer"
                         data-icon="material-symbols:menu" data-inline="false"></span>
                 </div>
-                <div class=" w-full flex flex-row">
-                    <!-- This allows the search area to take the remaining space -->
-                   
-                    <div class="w-full justify-end flex pr-10 items-center"> logout</div>
+                <div class="w-full flex flex-row relative pr-10">
+                    <div class="w-full flex justify-end items-center relative">
+                        <span id="clickProfile" class="iconify w-7 h-7 hover:cursor-pointer"
+                            data-icon="fluent-mdl2:jenkins-logo" data-inline="false"></span>
+                    </div>
+                </div>
 
+                <div id="show_profile_logout" class="hidden absolute  top-10 right-10 flex flex-col gap-2 ">
+                    <div class="hover:bg-blue-300    hover:cursor-pointer  rounded-sm">Profile</div>
+                    <div id="logout" class="hover:bg-blue-300 hover:cursor-pointer rounded-sm ">Logout</div>
                 </div>
             </div>
 
             <!-- Main Content -->
-            <div class="flex-grow p-4">
-            <?php
+            <div class="flex-grow pl-4 w-full overflow-y-auto">
+                <?php
                 include $_SERVER['DOCUMENT_ROOT'] . '/php/src/Page/Admin/input.php'; // Using absolute path
                 ?>
             </div>
         </div>
-
     </div>
 
     <script>
-    // Select the elements
-    const menu_bar = document.getElementById('menu_bar');
-    const icon_menu = document.getElementById('icon_menu');
-    const textElements = menu_bar.querySelectorAll('.menu-title'); // Corrected selector for menu titles
-    const iconContainers = menu_bar.querySelectorAll('.flex-row');
+    // Add event listener for profile logo click
+    document.addEventListener('DOMContentLoaded', function() {
+        clickOnprofileLogo();
+    });
 
-    // Toggle width class on click
-    icon_menu.addEventListener('click', function() {
-        if (menu_bar.classList.contains('w-[20%]')) {
-            // Change to narrow width
-            menu_bar.classList.remove('w-[20%]');
-            menu_bar.classList.add('w-20');
-            textElements.forEach(text => text.classList.add('hidden-text')); // Hide text
-            iconContainers.forEach(container => {
-                container.classList.remove('justify-start'); // Remove left alignment
-                container.classList.add('justify-center'); // Center the icons
-            });
+    function clickOnprofileLogo() {
+        const clickProfile = document.getElementById('clickProfile');
+        const showProfileLogout = document.getElementById('show_profile_logout');
+
+        clickProfile.addEventListener('click', function() {
+            if (showProfileLogout.classList.contains('hidden')) {
+                showProfileLogout.classList.remove('hidden'); // Show profile/logout section
+            } else {
+                showProfileLogout.classList.add('hidden'); // Hide profile/logout section
+            }
+        });
+    }
+
+    // Sidebar Menu Toggle
+    const menuBar = document.getElementById('menu_bar');
+    const iconMenu = document.getElementById('icon_menu');
+    const textElements = menuBar.querySelectorAll('.menu-title');
+    const iconContainers = menuBar.querySelectorAll('.flex-row');
+
+    iconMenu.addEventListener('click', function() {
+        if (menuBar.classList.contains('w-[20%]')) {
+            // Collapse Sidebar
+            menuBar.classList.remove('w-[20%]');
+            menuBar.classList.add('w-20');
+            textElements.forEach(text => text.classList.add('hidden-text'));
+            iconContainers.forEach(container => container.classList.add('justify-center'));
         } else {
-            // Change to wide width
-            menu_bar.classList.remove('w-20');
-            menu_bar.classList.add('w-[20%]');
-            textElements.forEach(text => text.classList.remove('hidden-text')); // Show text
-            iconContainers.forEach(container => {
-                container.classList.remove('justify-center'); // Remove center alignment
-                container.classList.add('justify-start'); // Reset to left alignment
-            });
+            // Expand Sidebar
+            menuBar.classList.remove('w-20');
+            menuBar.classList.add('w-[20%]');
+            textElements.forEach(text => text.classList.remove('hidden-text'));
+            iconContainers.forEach(container => container.classList.remove('justify-center'));
         }
     });
     </script>

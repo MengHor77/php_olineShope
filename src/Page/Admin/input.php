@@ -1,170 +1,4 @@
-<?php
-// Database connection parameters
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "php_test_database";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// SQL query to create a table if it doesn't exist
-$sql_createTable = "CREATE TABLE IF NOT EXISTS products (
-    productID INT AUTO_INCREMENT PRIMARY KEY,
-    productName VARCHAR(200) NOT NULL,
-    productPrice DOUBLE NOT NULL,
-    productQty INT NOT NULL,
-    productImage VARCHAR(255)
-)";
-
-if ($conn->query($sql_createTable) !== TRUE) {
-    echo "Error creating table: " . $conn->error . "<br>";
-}
-
-// Add product to database
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['edit_id'])) {
-    $productName = $conn->real_escape_string($_POST['text_name']);
-    $productPrice = $conn->real_escape_string($_POST['text_price']);
-    $productQty = $conn->real_escape_string($_POST['text_qty']);
-
-    $productImage = '';
-    if (isset($_FILES['text_image']) && $_FILES['text_image']['error'] == 0) {
-        $fileTmpPath = $_FILES['text_image']['tmp_name'];
-        $fileName = $_FILES['text_image']['name'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
-        
-        $allowedExts = array('jpg', 'jpeg', 'png', 'gif');
-
-        if (in_array($fileExtension, $allowedExts)) {
-            $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/uploads/';
-           
-            if (!is_dir($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true);
-            }
-            $destPath = $uploadFileDir . $fileName;
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                $productImage = $fileName;
-            } else {
-                echo "Error moving the file.<br>";
-            }
-        } else {
-            echo "Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.<br>";
-        }
-    }
-
-    $sql = "INSERT INTO products (productName, productPrice, productQty, productImage)
-            VALUES ('$productName', '$productPrice', '$productQty', '$productImage')";
-    if ($conn->query($sql) !== TRUE) {
-        echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-    } else {
-        echo "New record created successfully<br>";
-    }
-}
-
-// Handle form submission for editing products
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_id'])) {
-    $productId = $conn->real_escape_string($_POST['edit_id']);
-    $productName = $conn->real_escape_string($_POST['edit_name']);
-    $productPrice = $conn->real_escape_string($_POST['edit_price']);
-    $productQty = $conn->real_escape_string($_POST['edit_qty']);
-
-    // Retrieve the current product image from the database
-    $sql_select = "SELECT productImage FROM products WHERE productID = $productId";
-    $result = $conn->query($sql_select);
-    $currentImage = '';
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $currentImage = $row['productImage'];
-    }
-
-    $productImage = $currentImage; // Default to the current image
-
-    // Check if a new image was uploaded
-    if (isset($_FILES['edit_image']) && $_FILES['edit_image']['error'] == 0) {
-        $fileTmpPath = $_FILES['edit_image']['tmp_name'];
-        $fileName = $_FILES['edit_image']['name'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
-
-        $allowedExts = array('jpg', 'jpeg', 'png', 'gif');
-
-        if (in_array($fileExtension, $allowedExts)) {
-            $uploadFileDir = 'C:/xampp/htdocs/php/src/Page/Admin/uploads/';
-            $destPath = $uploadFileDir . $fileName;
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                $productImage = $fileName; // Update the image path only if a new image is uploaded
-            } else {
-                echo "Error moving the file.<br>";
-            }
-        } else {
-            echo "Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.<br>";
-        }
-    }
-
-    // Update the product details including the image if a new one is uploaded
-    $sql = "UPDATE products SET 
-            productName = '$productName', 
-            productPrice = '$productPrice', 
-            productQty = '$productQty', 
-            productImage = '$productImage'
-            WHERE productID = $productId";
-    
-    if ($conn->query($sql) !== TRUE) {
-        echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-    } else {
-        echo "Record updated successfully "; 
-    }
-}
-
-// Handle record deletion
-if (isset($_GET['delete_id'])) {
-    $deleteId = $conn->real_escape_string($_GET['delete_id']);
-    $sql = "DELETE FROM products WHERE productID = $deleteId";
-    if ($conn->query($sql) !== TRUE) {
-        echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-    } else {
-        echo "Record deleted successfully<br>";
-    }
-}
-
-// Check if 'fetch_id' parameter is set in the URL
-if (isset($_GET['fetch_id'])) {
-    // Sanitize the fetch ID to ensure it's an integer
-    $fetchId = intval($_GET['fetch_id']);
-
-    // Prepare SQL query using prepared statements to prevent SQL injection
-    $sql = "SELECT * FROM products WHERE productID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $fetchId); // "i" denotes integer type
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Set content type to JSON
-    header('Content-Type: application/json');
-
-    // Check if a product was found
-    if ($result->num_rows > 0) {
-        // Fetch the product details and return as JSON
-        echo json_encode($result->fetch_assoc());
-    } else {
-        // Return an error message if no product is found
-        echo json_encode(array('error' => 'Product not found'));
-    }
-
-  
-    
-    // Exit script to prevent further execution
-    exit();
-}
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -204,7 +38,7 @@ if (isset($_GET['fetch_id'])) {
     </style>
 </head>
 
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-100">
 
     <!-- Trigger Button -->
     <div class="mb-4  flex justify-between">
@@ -217,10 +51,7 @@ if (isset($_GET['fetch_id'])) {
                 class="border border-gray-300 px-4 py-2 rounded-lg mr-2">
             <button id="searchButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
         </div>
-        <div class="flex flex-col gap-1  items-end">
-            <button id="logout" class=" bg-blue-500 rounded-md px-4 py-2 w-20 items-end ">logout</button>
-            <!-- Welcome message -->
-        </div>
+        
     </div>
     <!-- comfirm delete product -->
 
@@ -295,7 +126,8 @@ if (isset($_GET['fetch_id'])) {
                     <td class='border-b px-4 py-2 text-center'>{$row['productName']}</td>
                     <td class='border-b px-4 py-2 text-center'>{$row['productPrice']}</td>
                     <td class='border-b px-4 py-2 text-center'>{$row['productQty']}</td>
-                    <td class='border-b px-4 py-2 text-center'><img src='/php/src/Page/Admin/uploads/{$row['productImage']}' alt='{$row['productName']}' class='w-20 h-20 object-fit mx-auto'></td>
+                    
+                    <td class='border-b px-4 py-2 text-center'><img src='/php/src/Page/Admin/Layout/Header/uploads/{$row['productImage']}' alt='{$row['productName']}' class='w-20 h-20 object-fit mx-auto'></td>
                     <td class='border-b px-4 py-2 text-center'>
                      <div class='flex justify-center space-x-4'>
                             <button class='edit-btn bg-blue-500 text-white px-4 py-2 rounded-lg' data-id='{$row['productID']}'>Edit</button>
@@ -399,7 +231,7 @@ if (isset($_GET['fetch_id'])) {
 
                                         // Handle image preview display
                                         if (jsonData.productImage) {
-                                            editPreview.src = `http://localhost/php/src/Page/Admin/uploads/${jsonData.productImage}`;
+                                            editPreview.src = `http://localhost/php/src/Page/Admin/Layout/Header/uploads/${jsonData.productImage}`;
                                             editPreview.style.display = 'block';
                                         } else {
                                             editPreview.style.display = 'none';
