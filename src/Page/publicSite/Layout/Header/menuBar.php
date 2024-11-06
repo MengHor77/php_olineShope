@@ -39,27 +39,27 @@
 
             <div class="w-[60px] h-full flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickNew">
-                <a href="/php/src/new" class="text-white text-center font-bold text-md tracking-widest">NEW</a>
+                <a href="/php/src/new" class="hover:no-underline text-white text-center font-bold text-md tracking-widest">NEW</a>
             </div>
             <div class="w-[60px] h-full px-10 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickFood">
 
-                <a href="/php/src/food" class="text-white text-center font-bold text-md tracking-widest">FOOD</a>
+                <a href="/php/src/food" class="hover:no-underline text-white text-center font-bold text-md tracking-widest">FOOD</a>
             </div>
             <div class="w-[60px] h-full px-10 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickDrink">
 
-                <a href="/php/src/drink" class="text-white text-center font-bold text-md tracking-widest">DRINK</a>
+                <a href="/php/src/drink" class="hover:no-underline text-white text-center font-bold text-md tracking-widest">DRINK</a>
             </div>
             <div class="w-[200px] h-full px-1 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickHealthAndBeauty">
-                <a href="/php/src/health-beauty" class="text-white text-center font-bold text-md tracking-widest">HEALTH
+                <a href="/php/src/health-beauty" class="hover:no-underline text-white text-center font-bold text-md tracking-widest">HEALTH
                     & BEAUTY</a>
             </div>
 
             <div class="w-[190px] h-full px-1 flex justify-center items-center hover:bg-primary-100 cursor-pointer"
                 id="clickHomeAndLifeStyle">
-                <a href="/php/src/home-life-style" class="text-white text-center font-bold text-md tracking-widest">HOME
+                <a href="/php/src/home-life-style" class=" hover:no-underline text-white text-center font-bold text-md tracking-widest">HOME
                     & LIFESTYLE</a>
             </div>
         </div>
