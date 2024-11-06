@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header Public Site</title>
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="http://localhost/php/dist/styles.css" rel="stylesheet"> <!-- Corrected path -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
-   
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
 </head>
 
 <body>
@@ -38,7 +38,7 @@
                 <span class="iconify w-7 h-7" data-icon="f7:qrcode" data-inline="false"></span>
 
                 <!-- Account Icon -->
-                <span class="iconify w-7 h-7" data-icon="line-md:account" data-inline="false"></span>
+                <span class="iconify w-7 h-7" data-icon="mdi:account" data-inline="false"></span>
 
 
                 <!-- Dropdown Flag Options -->
